@@ -1,0 +1,20 @@
+## Event Modeling example implementation
+
+Based on this Event Model: https://miro.com/app/board/uXjVKvTN_NQ=/
+
+Using [Sourced](https://github.com/ismasan/sourced) (work in progress).
+
+### Install
+
+You'll need Ruby 3.4 or later installed.
+
+Install dependencies:
+```bash
+$ bundle install
+```
+
+### Testing
+
+```bash
+$ bundle exec rspec
+```
