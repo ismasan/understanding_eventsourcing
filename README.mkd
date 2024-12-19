@@ -1,6 +1,6 @@
 ## Event Modeling example implementation
 
-Based on this Event Model: https://miro.com/app/board/uXjVKvTN_NQ=/
+Based on this Event Model: https://miro.com/app/board/uXjVKvTN_NQ=/ from the book [Understanding Eventsourcing](https://leanpub.com/eventmodeling-and-eventsourcing) by Martin Dilger.
 
 Using [Sourced](https://github.com/ismasan/sourced) (work in progress).
 
