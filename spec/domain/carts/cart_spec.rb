@@ -4,7 +4,6 @@ RSpec.describe Carts::Cart do
   describe Carts::AddItem do
     it 'adds a line item' do
       stream_id = 'cart-1'
-      product_id = SecureRandom.uuid
 
       cart = Carts::Cart.new(stream_id)
 
@@ -12,7 +11,7 @@ RSpec.describe Carts::Cart do
       cmd = build_message(
         Carts::AddItem,
         stream_id,
-        product_id:,
+        product_id: SecureRandom.uuid,
         description: 'A product',
         image: 'http://example.com/image.jpg',
         price: 2000,
@@ -30,6 +29,52 @@ RSpec.describe Carts::Cart do
       ]
 
       assert_same_events(expected_events, events)
+    end
+
+    it 'supports up to 3 items' do
+      cart = Carts::Cart.new('cart-1')
+
+      cart.decide build_message(
+        Carts::AddItem, 
+        cart.id,
+        product_id: SecureRandom.uuid,
+        description: 'p1',
+        image: 'http://example.com/1.jpg',
+        price: 2000,
+        total_price: 2100
+      )
+
+      cart.decide build_message(
+        Carts::AddItem, 
+        cart.id,
+        product_id: SecureRandom.uuid,
+        description: 'p2',
+        image: 'http://example.com/1.jpg',
+        price: 2000,
+        total_price: 2100
+      )
+
+      cart.decide build_message(
+        Carts::AddItem, 
+        cart.id,
+        product_id: SecureRandom.uuid,
+        description: 'p3',
+        image: 'http://example.com/1.jpg',
+        price: 2000,
+        total_price: 2100
+      )
+
+      expect do
+        cart.decide build_message(
+          Carts::AddItem, 
+          cart.id,
+          product_id: SecureRandom.uuid,
+          description: 'p3',
+          image: 'http://example.com/1.jpg',
+          price: 2000,
+          total_price: 2100
+        )
+      end.to raise_error(Carts::Cart::MaxItemsReachedError, 'can only add up to 3 items')
     end
   end
 
