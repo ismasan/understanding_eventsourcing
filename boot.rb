@@ -25,3 +25,6 @@ if ENV['ENVIRONMENT'] != 'test'
     Sourced.config.logger.warn 'No DATABASE_URL found, using in-memory backend'
   end
 end
+
+# Register Sourced deciders and reactors
+Sourced::Router.register(Carts::Cart)
