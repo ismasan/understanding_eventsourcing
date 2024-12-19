@@ -34,32 +34,30 @@ RSpec.describe Carts::Cart do
     it 'supports up to 3 items' do
       cart = Carts::Cart.new('cart-1')
 
-      cart.decide build_message(
-        Carts::AddItem, 
-        cart.id,
+      cart.event(
+        Carts::ItemAdded, 
         product_id: SecureRandom.uuid,
+        item_id: SecureRandom.uuid,
         description: 'p1',
         image: 'http://example.com/1.jpg',
         price: 2000,
         total_price: 2100
       )
-
-      cart.decide build_message(
-        Carts::AddItem, 
-        cart.id,
+      cart.event(
+        Carts::ItemAdded, 
         product_id: SecureRandom.uuid,
+        item_id: SecureRandom.uuid,
         description: 'p2',
-        image: 'http://example.com/1.jpg',
+        image: 'http://example.com/2.jpg',
         price: 2000,
         total_price: 2100
       )
-
-      cart.decide build_message(
-        Carts::AddItem, 
-        cart.id,
+      cart.event(
+        Carts::ItemAdded, 
         product_id: SecureRandom.uuid,
+        item_id: SecureRandom.uuid,
         description: 'p3',
-        image: 'http://example.com/1.jpg',
+        image: 'http://example.com/3.jpg',
         price: 2000,
         total_price: 2100
       )
