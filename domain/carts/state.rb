@@ -32,7 +32,7 @@ module Carts
 
     # @return [Numeric]
     def total
-      line_items.values.sum(&:total)
+      line_items.values.sum(&:total_price)
     end
   end
 end
